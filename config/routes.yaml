@@ -105,3 +105,8 @@ Libreria_add:
     path: /Libreria/AddMedia
     controller: App\Controller\LibreriaController::añadir_libreria_media
     methods: POST
+
+Libreria_new:
+    path: /Libreria/New/{id_usuario}
+    controller: App\Controller\LibreriaController::Crear_libreria
+    methods: POST

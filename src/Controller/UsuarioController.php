@@ -20,16 +20,9 @@ class UsuarioController extends AbstractController
                     $bodydata, 
                     Usuario::class, 
                     'json');
-
-            $usuario = $this->getDoctrine()
-                ->getRepository(Usuario::class)
-                ->findOneBy([
-                    'usuarios' => $usuario_new->getUsuarios(),
-                    'password' => $usuario_new->getPassword()
-                ]);
             
-            if ($usuario != null){
-                return new Response($serializer->serialize(['id' => $usuario->getId()], 'json'));
+            if ($usuario_new != null){
+                return new Response($serializer->serialize(['id' => $usuario_new->getId()], 'json'));
             } else {
                 return new Response('{"error":', Response::HTTP_UNAUTHORIZED, ['Content-Type' => 'application/json']);
             }   
@@ -100,6 +93,7 @@ class UsuarioController extends AbstractController
 
             return new Response($serializer->serialize($usuario_delete, 'json', ['groups' => 'usuario']));
         }
+
     }
 
 

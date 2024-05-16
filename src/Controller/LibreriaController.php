@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Libreria;
 use App\Entity\LibreriaMedia;
 use App\Entity\Media;
+use App\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,11 +43,12 @@ class LibreriaController extends AbstractController
     {
         if ($request->isMethod('POST')) 
         {
-            $id_media = $_POST['id_media'];
-            $id_libreria = $_POST['id_libreria'];
+            $id_libreria = $_GET['id_lib'];
+            $id_media = $_GET['id_med'];
+            
             $media = $this->getDoctrine()->getRepository(Media::class)->findOneBy(['id' => $id_media]);
             $libreria = $this->getDoctrine()->getRepository(Libreria::class)->findOneBy(['id' => $id_libreria]);
-
+    
             $libreria_media = new LibreriaMedia();
             $libreria_media->setIdLibreria($libreria);
             $libreria_media->setIdMedia($media);
@@ -54,11 +56,38 @@ class LibreriaController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($libreria_media);
             $entityManager->flush();
-
+    
             $contenido = $this->getDoctrine()->getRepository(Libreria::class)->findContenidoLibreria($id_libreria);
-
+    
             return new Response($serializer->serialize($contenido, 'json'));
             
+        }
+
+    }
+
+    public function Crear_libreria(Request $request, SerializerInterface $serializer)
+    {
+        if ($request->isMethod('POST')) 
+        {
+            $id = $request->get('id_usuario');
+
+            $usuario = $this->getDoctrine()->getRepository(Usuario::class)->findOneBy(['id' => $id]);
+
+            $bodydata = $request->getContent();
+            $libreria_new = $serializer->deserialize(
+                $bodydata, 
+                Libreria::class, 
+                'json');
+            
+            $libreria_new->setIdUsuario($usuario);
+            
+            
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($libreria_new);
+            $entityManager->flush();
+    
+    
+            return new Response($serializer->serialize($libreria_new, 'json', ['groups' => 'libreria']));
         }
     }
 }
