@@ -1,0 +1,107 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+Usuario_log:
+    path: /Log
+    controller: App\Controller\UsuarioController::log
+    methods: POST
+
+
+Usuario_new:
+    path: /NewUser
+    controller: App\Controller\UsuarioController::new_user
+    methods: POST
+
+Usuario_id:
+    path: /User
+    controller: App\Controller\UsuarioController::user_id
+    methods: GET|DELETE
+
+
+Series:
+    path: /Series
+    controller: App\Controller\SerieController::series
+    methods: GET
+
+Serie_id:
+    path: /Serie
+    controller: App\Controller\SerieController::serie_id
+    methods: GET
+
+Series_genero:
+    path: /Series/Genero
+    controller: App\Controller\SerieController::serie_genero
+    methods: GET
+
+
+Peliculas:
+    path: /Peliculas
+    controller: App\Controller\PeliculaController::Peliculas
+    methods: GET
+
+Pelicula_id:
+    path: /Pelicula
+    controller: App\Controller\PeliculaController::pelicula_id
+    methods: GET
+
+Peliculas_genero:
+    path: /Peliculas/Genero
+    controller: App\Controller\PeliculaController::pelicula_genero
+    methods: GET
+
+Generos:
+    path: /Generos
+    controller: App\Controller\GenerosController::generos
+    methods: GET
+
+Noticias:
+    path: /Noticias
+    controller: App\Controller\NoticiasController::noticias
+    methods: GET
+
+Noticia_id:
+    path: /Noticia
+    controller: App\Controller\NoticiasController::noticia_id
+    methods: GET
+
+
+Noticia_genero:
+    path: /Noticias/Genero
+    controller: App\Controller\NoticiasController::noticias_genero
+    methods: GET
+
+Busqueda:
+    path: /Busqueda
+    controller: App\Controller\BusquedaController::busquedaAll
+    methods: GET
+
+Busqueda_genero:
+    path: /Busqueda/Genero
+    controller: App\Controller\BusquedaController::busqueda_genero
+    methods: GET
+
+Busqueda_year:
+    path: /Busqueda/Year
+    controller: App\Controller\BusquedaController::busqueda_year
+    methods: GET
+
+Busqueda_genero_year:
+    path: /Busqueda/Genero/Year
+    controller: App\Controller\BusquedaController::busqueda_genero_year
+    methods: GET
+
+Libreria_user:
+    path: /Libreria/User
+    controller: App\Controller\LibreriaController::libreria_user
+    methods: GET
+
+Libreria_Contenido:
+    path: /Libreria/media
+    controller: App\Controller\LibreriaController::contenido_libreria
+    methods: GET
+
+Libreria_add:
+    path: /Libreria/AddMedia
+    controller: App\Controller\LibreriaController::añadir_libreria_media
+    methods: POST
