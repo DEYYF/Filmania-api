@@ -24,10 +24,14 @@ class BusquedaController extends AbstractController
                 ->findOneBy(['id' => 2]);
 
 
-            $busqueda = $this->getDoctrine()->getRepository(Media::class)
-                ->findBy(['tipo' => $tipo_peli, 'tipo' => $tipo_serie]);
+            $busqueda1 = $this->getDoctrine()->getRepository(Media::class)
+                ->findBy(['tipo' => $tipo_peli]);
+            
+            $busqueda2 = $this->getDoctrine()->getRepository(Media::class)->findBy(['tipo' => $tipo_serie]);
 
-            return new Response($serializer->serialize($busqueda, 'json'));
+            $busqueda = array_merge($busqueda2, $busqueda1);
+
+            return new Response($serializer->serialize($busqueda, 'json', ['groups' => 'media']));
         }
     }
 
@@ -40,7 +44,7 @@ class BusquedaController extends AbstractController
             $busqueda = $this->getDoctrine()->getRepository(Media::class)
                 ->findBusquedaGenero($id_g);
             
-            return new Response($serializer->serialize($busqueda, 'json'));
+            return new Response($serializer->serialize($busqueda, 'json', ['groups' => 'media']));
         }
     }
 
@@ -53,7 +57,7 @@ class BusquedaController extends AbstractController
             $busqueda = $this->getDoctrine()->getRepository(Media::class)
                 ->findBusquedaYear($year);
             
-            return new Response($serializer->serialize($busqueda, 'json'));
+            return new Response($serializer->serialize($busqueda, 'json', ['groups' => 'media']));
         }
     }
 
@@ -67,7 +71,7 @@ class BusquedaController extends AbstractController
             $busqueda = $this->getDoctrine()->getRepository(Media::class)
                 ->findBusquedaYearGenero($year, $id_g);
             
-            return new Response($serializer->serialize($busqueda, 'json'));
+            return new Response($serializer->serialize($busqueda, 'json', ['groups' => 'media']));
         }
     }
     
