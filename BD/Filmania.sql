@@ -4,7 +4,7 @@ use Filmania2;
 
 CREATE TABLE Usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    Usuarios VARCHAR(255) NOT NULL,
+    Usuarios VARCHAR(255) NOT NULL UNIQUE,
     Password VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
     Genero VARCHAR(50),

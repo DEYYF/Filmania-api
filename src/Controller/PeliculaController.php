@@ -30,7 +30,7 @@ class PeliculaController extends AbstractController
                 $detalle = $this->getDoctrine()->getRepository(DetallePelicula::class)
                     ->findoneBy(['idPelicula' => $media]);
 
-                $Pelicula  = [
+                $Pelicula [] = [
                     'id' => $media->getId(),
                     'Titulo' => $media->getTitulo(),
                     'Descripcion' => $media->getDescripcion(),
@@ -79,7 +79,7 @@ class PeliculaController extends AbstractController
    }
 
 
-   public function Pelicula_genero(Request $request, SerializerInterface $serializer)
+   public function pelicula_genero(Request $request, SerializerInterface $serializer)
    {
 
         if ($request->isMethod('GET')) 
