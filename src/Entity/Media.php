@@ -55,7 +55,6 @@ class Media
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="Tipo", referencedColumnName="id")
      * })
-     * @Groups("media")
      */
     private $tipo;
 
