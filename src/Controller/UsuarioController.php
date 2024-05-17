@@ -96,6 +96,36 @@ class UsuarioController extends AbstractController
 
     }
 
+    public function user_config(Request $request, SerializerInterface $serializer)
+    {
+        if ($request->isMethod('POST')) 
+        {
+            $bodydata = $request->getContent();
+            $usuario_new = $serializer->deserialize(
+                $bodydata, 
+                Usuario::class, 
+                'json');
+
+            $id = $request->get('id_usuario');
+            $usuario = $this->getDoctrine()
+                ->getRepository(Usuario::class)
+                ->findOneBy(['id' => $id]);
+
+            $usuario->setUsuarios($usuario_new->getUsuarios());
+            $usuario->setEmail($usuario_new->getEmail());
+            $usuario->setPais($usuario_new->getPais());
+            $usuario->setGenero($usuario_new->getGenero());
+            $usuario->setPassword($usuario_new->getPassword());
+            $usuario->setImagen($usuario_new->getImagen());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($usuario);
+            $entityManager->flush();
+
+            return new Response($serializer->serialize($usuario, 'json', ['groups' => 'usuario']));
+        }
+    }
+
 
 
 }

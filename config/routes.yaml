@@ -18,6 +18,13 @@ Usuario_id:
     controller: App\Controller\UsuarioController::user_id
     methods: GET|DELETE
 
+Usuario_update:
+    path: /User/{id_usuario}
+    controller: App\Controller\UsuarioController::user_config
+    methods: POST
+
+
+
 
 Series:
     path: /Series
