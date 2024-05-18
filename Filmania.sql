@@ -12,7 +12,7 @@ CREATE TABLE Usuario (
     Imagen VARCHAR(255)
 );
 
-INSERT INTO Usuario (id, Nombre, Password, Email, Genero, Pais, Imagen)
+INSERT INTO Usuario (id, Usuarios, Password, Email, Genero, Pais, Imagen)
 VALUES
 (1, 'unfago', '12345', 'unaifago@gmail.com', 'Hombre', 'España', 'https://pbs.twimg.com/media/Fy75lCdXgAEGjWa.jpg'),
 (2, 'Alvaricoque', '12345', 'alvarealla@alu.edu.gva.es', 'Femenino', 'Argentina', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Apricot_and_cross_section.jpg/251px-Apricot_and_cross_section.jpg');
@@ -27,8 +27,10 @@ CREATE TABLE Libreria (
 );
 INSERT INTO Libreria (id, Titulo, Imagen, id_usuario)
 VALUES
-(8, 'ver mas tarde', 'https://cdn.pixabay.com/photo/2019/07/03/09/43/clock-4314041_960_720.jpg', 9),
-(9, 'Favoritos', 'https://t3.ftcdn.net/jpg/01/21/64/88/360_F_121648819_ZQ0tZ6tjLzxim1SG7CQ86raBw4sglCzB.jpg', 9);
+(1, 'ver mas tarde', 'https://cdn.pixabay.com/photo/2019/07/03/09/43/clock-4314041_960_720.jpg', 1),
+(2, 'Favoritos', 'https://t3.ftcdn.net/jpg/01/21/64/88/360_F_121648819_ZQ0tZ6tjLzxim1SG7CQ86raBw4sglCzB.jpg', 1),
+(3, 'ver mas tarde', 'https://cdn.pixabay.com/photo/2019/07/03/09/43/clock-4314041_960_720.jpg', 2),
+(4, 'Favoritos', 'https://t3.ftcdn.net/jpg/01/21/64/88/360_F_121648819_ZQ0tZ6tjLzxim1SG7CQ86raBw4sglCzB.jpg', 2);
 
 
 
@@ -230,8 +232,9 @@ create table Libreria_Media(
 	foreign key(id_libreria) references Libreria(id) on delete cascade
 	);
     INSERT INTO Libreria_Media (id, id_libreria, id_media) VALUES
-(4, 8, 9),
-(5, 9, 32),
-(6, 8, 32);
+(1, 1, 9),
+(2, 2, 32),
+(3, 3, 32),
+(4, 4, 29);
 
     
