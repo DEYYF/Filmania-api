@@ -51,7 +51,7 @@ class SerieController extends AbstractController
    {
         if ($request->isMethod('GET')) 
         {
-            $id = $_GET['id'];
+            $id =$request->query->get('id');
 
 
             $media = $this->getDoctrine()->getRepository(Media::class)
@@ -82,9 +82,9 @@ class SerieController extends AbstractController
 
         if ($request->isMethod('GET')) 
         {
-            $id_g = $_GET['id_g'];
-            $id_g2 = $_GET['id_g2'];
-            $id_g3 = $_GET['id_g3'];
+            $id_g =$request->query->get('id_g');
+            $id_g2 =$request->query->get('id_g2');
+            $id_g3 =$request->query->get('id_g3');
 
             $medias = $this->getDoctrine()->getRepository(Media::class)->findSerieGenero($id_g, $id_g2, $id_g3);
             

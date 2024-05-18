@@ -39,7 +39,7 @@ class BusquedaController extends AbstractController
     {
         if ($request->isMethod('GET')) 
         {
-            $id_g = $_GET['genero'];
+            $id_g = $request->query->get('genero');
             
             $busqueda = $this->getDoctrine()->getRepository(Media::class)
                 ->findBusquedaGenero($id_g);
@@ -52,7 +52,7 @@ class BusquedaController extends AbstractController
     {
         if ($request->isMethod('GET')) 
         {
-            $year = $_GET['year'];
+            $year = $request->query->get('year');
             
             $busqueda = $this->getDoctrine()->getRepository(Media::class)
                 ->findBusquedaYear($year);
@@ -65,8 +65,9 @@ class BusquedaController extends AbstractController
     {
         if ($request->isMethod('GET')) 
         {
-            $year = $_GET['year'];
-            $id_g = $_GET['genero'];
+            $year = $request->query->get('year');
+            $id_g = $request->query->get('genero');
+
             
             $busqueda = $this->getDoctrine()->getRepository(Media::class)
                 ->findBusquedaYearGenero($year, $id_g);

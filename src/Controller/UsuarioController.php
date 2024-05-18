@@ -22,13 +22,21 @@ class UsuarioController extends AbstractController
                     'json');
             
             if ($usuario_new != null){
-                return new Response($serializer->serialize(['id' => $usuario_new->getId()], 'json'));
+                $usuario = $this->getDoctrine()->getRepository(Usuario::class)->findOneBy(['usuarios' => $usuario_new->getUsuarios(), 'password' => $usuario_new->getPassword()]);
+                if ($usuario != null) {
+                    // quiero mostrar solo el id del usuario en el json
+                    $id = $usuario->getId();
+                    return new Response(json_encode(['id' => $id]));
+                }
+                } else {
+                    return new Response('{"error":', Response::HTTP_UNAUTHORIZED, ['Content-Type' => 'application/json']);
+                }
             } else {
                 return new Response('{"error":', Response::HTTP_UNAUTHORIZED, ['Content-Type' => 'application/json']);
             }   
         }   
 
-    }
+    
 
 
     public function new_user(Request $request, SerializerInterface $serializer)
@@ -71,7 +79,7 @@ class UsuarioController extends AbstractController
     {
         if ($request->isMethod('GET')) 
         {
-            $id = $_GET['id'];
+            $id = $request->query->get('id');
             $usuario = $this->getDoctrine()
                 ->getRepository(Usuario::class)
                 ->findOneBy(['id' => $id]);

@@ -17,7 +17,7 @@ class LibreriaController extends AbstractController
     {
         if ($request->isMethod('GET')) 
         {
-            $id_user = $_GET['id_user'];
+            $id_user = $request->query->get('id_user');
 
             $libreria = $this->getDoctrine()->getRepository(Libreria::class)
             ->findBy(['idUsuario' => $id_user]);
@@ -30,7 +30,7 @@ class LibreriaController extends AbstractController
     {
         if ($request->isMethod('GET')) 
         {
-            $id_libreria = $_GET['id_libreria'];
+            $id_libreria = $request->query->get('id_libreria');
 
             $contenido = $this->getDoctrine()->getRepository(Libreria::class)
             ->findContenidoLibreria($id_libreria);
@@ -43,8 +43,8 @@ class LibreriaController extends AbstractController
     {
         if ($request->isMethod('POST')) 
         {
-            $id_libreria = $_GET['id_lib'];
-            $id_media = $_GET['id_med'];
+            $id_libreria = $request->query->get('id_lib');
+            $id_media = $request->query->get('id_med');
             
             $media = $this->getDoctrine()->getRepository(Media::class)->findOneBy(['id' => $id_media]);
             $libreria = $this->getDoctrine()->getRepository(Libreria::class)->findOneBy(['id' => $id_libreria]);
