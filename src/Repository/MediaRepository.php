@@ -71,7 +71,7 @@ class MediaRepository extends ORMEntityRepository
 
         $sql = " SELECT M.id, M.Titulo, M.Descripcion, M.Imagen
         from Media M
-        join Genero_Media G on m.id = G.id_media
+        join Genero_Media G on M.id = G.id_media
         where (M.Tipo = 1 or M.Tipo = 2) and G.id_genero = :id_g; " ;
 
         $stmt = $conn->prepare($sql);

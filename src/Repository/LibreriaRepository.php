@@ -10,7 +10,7 @@ class LibreriaRepository extends ORMEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT M.id M.Titulo, M.Imagen
+        $sql = "SELECT M.id, M.Titulo, M.Imagen
         FROM Media M
         join Libreria_Media P on M.id = P.id_media
         join Libreria L on P.id_libreria = L.id  
