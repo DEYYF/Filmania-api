@@ -12,8 +12,8 @@ class MediaRepository extends ORMEntityRepository
 
         $sql = "SELECT M.id, M.Titulo, M.Descripcion, M.Imagen, D.Temporadas, D.Ano, D.Trailer, D.Valoracion
         from Media M
-        join Detalle_Serie D on m.id = D.id_serie
-        join Genero_Media G on m.id = G.id_media
+        join Detalle_Serie D on M.id = D.id_serie
+        join Genero_Media G on M.id = G.id_media
         where M.Tipo = 2 and (G.id_genero = :id_g or G.id_genero = :id_g2 or G.id_genero = :id_g3)" ;
 
         $stmt = $conn->prepare($sql);
@@ -32,8 +32,8 @@ class MediaRepository extends ORMEntityRepository
 
         $sql = "SELECT M.id, M.Titulo, M.Descripcion, M.Imagen, D.Duracion, D.Ano, D.Trailer, D.Valoracion
         from Media M
-        join Detalle_Pelicula D on m.id = D.id_pelicula
-        join Genero_Media G on m.id = G.id_media
+        join Detalle_Pelicula D on M.id = D.id_pelicula
+        join Genero_Media G on M.id = G.id_media
         where M.Tipo = 1 and (G.id_genero = :id_g or G.id_genero = :id_g2 or G.id_genero = :id_g3);" ;
 
         $stmt = $conn->prepare($sql);
@@ -51,7 +51,7 @@ class MediaRepository extends ORMEntityRepository
 
         $sql = "SELECT M.id, M.Titulo, M.Descripcion, M.Imagen, M.Tipo
         from Media M
-        join Genero_Media G on m.id = G.id_media
+        join Genero_Media G on M.id = G.id_media
         where M.Tipo = 3 and (G.id_genero = :id_g or G.id_genero = :id_g2 or G.id_genero = :id_g3);" ;
 
         $stmt = $conn->prepare($sql);
