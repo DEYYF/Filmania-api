@@ -89,7 +89,7 @@ class UsuarioController extends AbstractController
 
         if ($request->isMethod('DELETE')) {
            
-            $id = $id = $_GET['id'];
+            $id = $request->query->get('id');
             $usuario = $this->getDoctrine()
                 ->getRepository(Usuario::class)
                 ->findOneBy(['id' => $id]);

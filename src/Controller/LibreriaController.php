@@ -90,4 +90,75 @@ class LibreriaController extends AbstractController
             return new Response($serializer->serialize($libreria_new, 'json', ['groups' => 'libreria']));
         }
     }
+
+    public function Eliminar_libreria(Request $request, SerializerInterface $serializer)
+    {
+        if ($request->isMethod('DELETE')) 
+        {
+            $id = $request->query->get('id');
+
+
+            $libreria = $this->getDoctrine()->getRepository(Libreria::class)->findOneBy(['id' => $id]);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($libreria);
+
+    
+            return new Response(json_encode(['Mensaje' => 'Libreria eliminada']));
+        }
+    }
+
+    public function añadir_libreria_ver_mas_tarde(Request $request, SerializerInterface $serializer)
+    {
+        if ($request->isMethod('POST')) 
+        {
+            $id_user = $request->query->get('id_user');
+            $id_media = $request->query->get('id_media');
+            
+            $media = $this->getDoctrine()->getRepository(Media::class)->findOneBy(['id' => $id_media]);
+            $usuario = $this->getDoctrine()->getRepository(Usuario::class)->findOneBy(['id' => $id_user]);
+    
+            $libreria = $this->getDoctrine()->getRepository(Libreria::class)->findOneBy(['idUsuario' => $usuario, 'titulo' => 'ver mas tarde']);
+
+    
+        
+            $libreria_media = new LibreriaMedia();
+            $libreria_media->setIdLibreria($libreria);
+            $libreria_media->setIdMedia($media);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($libreria_media);
+            $entityManager->flush();
+    
+            $contenido = $this->getDoctrine()->getRepository(Libreria::class)->findContenidoLibreria($id_libreria);
+    
+            return new Response($serializer->serialize($contenido, 'json'));
+        }
+    }
+
+
+    public function añadir_libreria_Favorito(Request $request, SerializerInterface $serializer)
+    {
+        $id_user = $request->query->get('id_user');
+        $id_media = $request->query->get('id_media');
+        
+        $media = $this->getDoctrine()->getRepository(Media::class)->findOneBy(['id' => $id_media]);
+        $usuario = $this->getDoctrine()->getRepository(Usuario::class)->findOneBy(['id' => $id_user]);
+
+        $libreria = $this->getDoctrine()->getRepository(Libreria::class)->findOneBy(['idUsuario' => $usuario, 'titulo' => 'Favorito']);
+
+
+    
+        $libreria_media = new LibreriaMedia();
+        $libreria_media->setIdLibreria($libreria);
+        $libreria_media->setIdMedia($media);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($libreria_media);
+        $entityManager->flush();
+
+        $contenido = $this->getDoctrine()->getRepository(Libreria::class)->findContenidoLibreria($id_libreria);
+
+        return new Response($serializer->serialize($contenido, 'json'));
+    }
 }

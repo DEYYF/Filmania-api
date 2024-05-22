@@ -24,8 +24,6 @@ Usuario_update:
     methods: POST
 
 
-
-
 Series:
     path: /Series
     controller: App\Controller\SerieController::series
@@ -117,3 +115,18 @@ Libreria_new:
     path: /Libreria/New/{id_usuario}
     controller: App\Controller\LibreriaController::Crear_libreria
     methods: POST
+
+Libreria_delete:
+    path: /Libreria/Delete
+    controller: App\Controller\LibreriaController::Eliminar_libreria
+    methods: DELETE
+
+Libreria_addVerMasTarde:
+    path: /Libreria/AddVerMasTarde
+    controller: App\Controller\LibreriaController::añadir_libreria_ver_mas_tarde
+    methods: POST
+
+Libreria_addFavorito:
+        path: /Libreria/AddFavorito
+        controller: App\Controller\LibreriaController::añadir_libreria_Favorito
+        methods: POST

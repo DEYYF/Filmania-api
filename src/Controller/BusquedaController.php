@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\DetallePelicula;
+use App\Entity\DetalleSerie;
 use App\Entity\GeneroMedia;
 use App\Entity\Media;
 use App\Entity\Tipo;
@@ -26,12 +28,36 @@ class BusquedaController extends AbstractController
 
             $busqueda1 = $this->getDoctrine()->getRepository(Media::class)
                 ->findBy(['tipo' => $tipo_peli]);
-            
+
+            foreach ($busqueda1 as $media) {
+                $detalle = $this->getDoctrine()->getRepository(DetallePelicula::class)
+                    ->findoneBy(['idPelicula' => $media]);
+
+                $Pelicula [] = [
+                    'id' => $media->getId(),
+                    'Titulo' => $media->getTitulo(),
+                    'Imagen' => $media->getImagen(),
+                    'Valoracion' => $detalle->getValoracion(),
+                ];
+            }
+
             $busqueda2 = $this->getDoctrine()->getRepository(Media::class)->findBy(['tipo' => $tipo_serie]);
 
-            $busqueda = array_merge($busqueda2, $busqueda1);
+            foreach ($busqueda2 as $media) {
+                $detalle = $this->getDoctrine()->getRepository(DetalleSerie::class)
+                    ->findoneBy(['idSerie' => $media]);
 
-            return new Response($serializer->serialize($busqueda, 'json', ['groups' => 'media']));
+                $Serie [] = [
+                    'id' => $media->getId(),
+                    'Titulo' => $media->getTitulo(),
+                    'Imagen' => $media->getImagen(),
+                    'Valoracion' => $detalle->getValoracion(),
+                ];
+            }
+
+            $busqueda = array_merge($Serie, $Pelicula);
+
+            return new Response($serializer->serialize($busqueda, 'json'));
         }
     }
 
