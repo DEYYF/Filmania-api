@@ -52,7 +52,7 @@ class NoticiasController extends AbstractController
 
            $noticias = $this->getDoctrine()->getRepository(Media::class)->findNoticiaGenero($id_g, $id_g2, $id_g3);
 
-            return new Response($serializer->serialize($noticias, 'json'));
+            return new Response($serializer->serialize($noticias, 'json',  ['groups' => 'media']));
         }
     }
 }
