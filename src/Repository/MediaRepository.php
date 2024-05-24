@@ -71,8 +71,7 @@ class MediaRepository extends ORMEntityRepository
     
         $sql = "  SELECT 
                 M.id, 
-                M.Titulo, 
-                M.Descripcion, 
+                M.Titulo,  
                 M.Imagen, 
                 S.Valoracion 
             FROM 
@@ -120,7 +119,7 @@ class MediaRepository extends ORMEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT M.id, M.Titulo, M.Descripcion, M.Imagen, S.Valoracion
+        $sql = "SELECT M.id, M.Titulo, M.Imagen, S.Valoracion
 		from Media M
         join Detalle_Serie S on M.id = S.id_serie
         where (M.Tipo = 1 or M.Tipo = 2) and S.Ano = :ano
@@ -145,7 +144,6 @@ class MediaRepository extends ORMEntityRepository
         $sql = "SELECT 
         M.id, 
         M.Titulo, 
-        M.Descripcion, 
         M.Imagen, 
         COALESCE(S.Valoracion, P.Valoracion) AS Valoracion
         FROM 
