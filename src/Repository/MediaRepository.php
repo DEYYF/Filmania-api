@@ -68,18 +68,52 @@ class MediaRepository extends ORMEntityRepository
     public function findBusquedaGenero($id_g)
     {
         $conn = $this->getEntityManager()->getConnection();
-
-        $sql = " SELECT M.id, M.Titulo, M.Descripcion, M.Imagen, G.Valoracion
-        from Media M
-        join Genero_Media G on M.id = G.id_media
-        where (M.Tipo = 1 or M.Tipo = 2) and G.id_genero = :id_g; " ;
-
+    
+        $sql = "  SELECT 
+                M.id, 
+                M.Titulo, 
+                M.Descripcion, 
+                M.Imagen, 
+                S.Valoracion 
+            FROM 
+                Media M
+            JOIN 
+                Detalle_Serie S ON M.id = S.id_serie
+            JOIN 
+                Genero_Media G ON M.id = G.id_media
+            JOIN 
+                Genero t ON G.id_genero = t.id
+            WHERE 
+                M.Tipo = 2 
+                AND t.Nombre = :id_g
+            
+            UNION ALL
+            
+            SELECT 
+                M.id, 
+                M.Titulo, 
+                M.Descripcion, 
+                M.Imagen, 
+                P.Valoracion 
+            FROM 
+                Media M
+            JOIN 
+                Detalle_Pelicula P ON M.id = P.id_pelicula
+            JOIN 
+                Genero_Media G ON M.id = G.id_media
+            JOIN 
+                Genero t ON G.id_genero = t.id
+            WHERE 
+                M.Tipo = 1 
+                AND t.Nombre = :id_g; ";
+    
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('id_g', $id_g);
+        $stmt->bindValue(':id_g', $id_g);
         $results = $stmt->executeQuery()->fetchAllAssociative();
-
+    
         return $results;
     }
+    
 
 
     public function findBusquedaYear($year)
@@ -108,17 +142,26 @@ class MediaRepository extends ORMEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT M.id, M.Titulo, M.Descripcion, M.Imagen, S.Valoracion
-		from Media M
-        join Genero_Media G on M.id = G.id_media
-        join Detalle_Serie S on M.id = S.id_serie
-        where (M.Tipo = 1 or M.Tipo = 2) and S.Ano = :ano and G.id_genero = :id_g
-        UNION ALL
-        SELECT M.id, M.Titulo, M.Descripcion, M.Imagen, P.Valoracion
-		from Media M
-        join Genero_Media G on M.id = G.id_media
-        join Detalle_Pelicula P on M.id = P.id_pelicula
-        where (M.Tipo = 1 or M.Tipo = 2) and P.Ano = :ano and G.id_genero = :id_g  ;";
+        $sql = "SELECT 
+        M.id, 
+        M.Titulo, 
+        M.Descripcion, 
+        M.Imagen, 
+        COALESCE(S.Valoracion, P.Valoracion) AS Valoracion
+        FROM 
+            Media M
+        JOIN 
+            Genero_Media G ON M.id = G.id_media
+        LEFT JOIN 
+            Detalle_Serie S ON M.id = S.id_serie AND M.Tipo = 2 AND S.Ano = :ano
+        LEFT JOIN 
+            Detalle_Pelicula P ON M.id = P.id_pelicula AND M.Tipo = 1 AND P.Ano = :ano
+        JOIN 
+            Genero t ON G.id_genero = t.id
+        WHERE 
+            (M.Tipo = 1 OR M.Tipo = 2) 
+            AND t.Nombre = :id_g
+            AND (S.Ano = :ano OR P.Ano = :ano);";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindValue('ano', $year);

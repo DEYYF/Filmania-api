@@ -130,3 +130,9 @@ Libreria_addFavorito:
         path: /Libreria/AddFavorito
         controller: App\Controller\LibreriaController::añadir_libreria_Favorito
         methods: POST
+
+
+Libreria_Cambio:
+    path: /Libreria/Cambio/{id_libreria}
+    controller: App\Controller\LibreriaController::cambio_configuracion
+    methods: POST

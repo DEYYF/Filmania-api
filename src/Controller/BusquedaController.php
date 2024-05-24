@@ -65,10 +65,10 @@ class BusquedaController extends AbstractController
     {
         if ($request->isMethod('GET')) 
         {
-            $id_g = $request->query->get('genero');
+            $nombre_genero = $request->query->get('genero');
             
             $busqueda = $this->getDoctrine()->getRepository(Media::class)
-                ->findBusquedaGenero($id_g);
+                ->findBusquedaGenero($nombre_genero);
             
             return new Response($serializer->serialize($busqueda, 'json', ['groups' => 'media']));
         }
@@ -92,11 +92,11 @@ class BusquedaController extends AbstractController
         if ($request->isMethod('GET')) 
         {
             $year = $request->query->get('year');
-            $id_g = $request->query->get('genero');
+            $nombre_genero = $request->query->get('genero');
 
             
             $busqueda = $this->getDoctrine()->getRepository(Media::class)
-                ->findBusquedaYearGenero($year, $id_g);
+                ->findBusquedaYearGenero($year,$nombre_genero);
             
             return new Response($serializer->serialize($busqueda, 'json', ['groups' => 'media']));
         }

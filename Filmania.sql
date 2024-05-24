@@ -54,21 +54,21 @@ create table Media(
     Foreign key(tipo) references Tipo(id) on delete cascade
     );
     INSERT INTO Media (id, Titulo, Descripcion, Imagen, Tipo) VALUES
-(1, 'Breaking Bad', 'Un profesor de química con problemas económicos se convierte en un fabricante de metanfetamina para asegurar el futuro financiero de su familia.', 'https://pics.filmaffinity.com/breaking_bad-771941027-large.jpg', 2),
+(1, 'Breaking Bad', 'Un profesor de química con problemas económicos se convierte en un fabricante de metanfetamina para asegurar el futuro financiero de su familia.', 'https://static.posters.cz/image/750/posters/breaking-bad-i-am-the-danger-i15749.jpg', 2),
 (2, 'Game of Thrones', 'Sigue las luchas dinásticas entre las familias nobles por el control del Trono de Hierro de los Siete Reinos; mientras otras facciones luchan por independencia del mismo.', 'https://tumbaabierta.com/wp-content/uploads/2012/03/juego_de_tronos_1920x1200_wallpaper_0.jpg', 2),
 (3, 'Stranger Things', 'Un grupo de niños en un pequeño pueblo investiga una serie de extrañas desapariciones y eventos sobrenaturales.', 'https://genotipia.com/wp-content/uploads/2017/10/stranger-things-season-2-poster-2-786x1174.jpg', 2),
-(4, 'The Crown', 'Sigue la vida de la reina Isabel II desde su boda en 1947 hasta los eventos actuales.', 'https://pics.filmaffinity.com/the_crown-838357032-large.jpg', 2),
+(4, 'The Crown', 'Sigue la vida de la reina Isabel II desde su boda en 1947 hasta los eventos actuales.', 'https://m.media-amazon.com/images/I/71f97nf-u9L._AC_UF894,1000_QL80_.jpg', 2),
 (5, 'The Mandalorian', 'Un solitario pistolero lucha en los confines de la galaxia, lejos de la autoridad de la Nueva República.', 'https://sm.ign.com/t/ign_es/cover/s/star-wars-/star-wars-the-mandalorian_mymx.1200.jpg', 2),
 (6, 'Peaky Blinders', 'Una familia de gánsteres ambientada en Birmingham, Inglaterra, en 1919, justo después de la Primera Guerra Mundial.', 'https://i.pinimg.com/474x/54/8a/49/548a49d961b82f4afe1762ccbe3ca1d2.jpg', 2),
 (7, 'Friends', 'Sigue las vidas, amores y desventuras de seis amigos que viven en Manhattan.', 'https://e00-expansion.uecdn.es/assets/multimedia/imagenes/2020/02/07/15810718650326.jpg', 2),
 (8, 'The Witcher', 'Geralt de Rivia, un cazador de monstruos solitario, lucha por encontrar su lugar en un mundo donde las personas a menudo son más malvadas que las bestias.', 'https://sm.ign.com/t/ign_es/gallery/t/the-witche/the-witcher-season-3-first-look-images_xagb.1080.jpg', 2),
 (9, 'La casa de Papel', 'Un grupo de criminales planea y ejecuta asaltos a la Fábrica Nacional de Moneda y Timbre de España.', 'https://www.koimoi.com/wp-content/new-galleries/2020/08/money-heist-5-pics-from-la-casa-de-papels-finale-shoot-will-surprise-you-as-it-features-a-dead-character001.jpg', 2),
 (10, 'The Office', 'Una mirada a la vida cotidiana de los empleados de una oficina de papel mediocre que se filma en un estilo de documental.', 'https://mx.web.img3.acsta.net/newsv7/17/12/22/00/21/1367244.jpg', 2),
-(11, 'Sherlock', 'Una versión moderna del detective de Arthur Conan Doyle, con Sherlock Holmes y el Dr. John Watson resolviendo crímenes en el Londres del siglo XXI.', 'https://pics.filmaffinity.com/Sherlock_Serie_de_TV-648383815-large.jpg', 2),
+(11, 'Sherlock', 'Una versión moderna del detective de Arthur Conan Doyle, con Sherlock Holmes y el Dr. John Watson resolviendo crímenes en el Londres del siglo XXI.', 'https://es.web.img3.acsta.net/pictures/15/11/20/12/35/130260.jpg', 2),
 (12, 'Narcos', 'Narcos cuenta la historia real de los infames jefes de la droga en la década de 1980 y los esfuerzos de las fuerzas de la ley para detenerlos.', 'https://es.web.img3.acsta.net/pictures/15/07/29/14/33/086520.jpg', 2),
 (13, 'House of Cards', 'Un congresista de los Estados Unidos trabaja con su esposa para vengarse de las personas que lo traicionaron.', 'https://m.media-amazon.com/images/M/MV5BNmM4ODU1MzItODYyYi00Y2U0LWFjZjItYTRhZWIwOGMyZTRhXkEyXkFqcGdeQXVyNjc2NTQ4Nzk@._V1_.jpg', 2),
 (14, 'The Simpsons', 'La vida satírica de una familia de clase trabajadora en la ciudad ficticia de Springfield.', 'https://wallpapers.com/images/featured/simpsons-pictures-9wzpuir133xwhizz.jpg', 2),
-(15, 'The Boys', 'Un grupo de vigilantes lucha contra superhéroes corruptos que abusan de sus poderes.', 'https://sm.ign.com/ign_es/image/t/the-boys-s/the-boys-season-4-release-date-announced_sn3s.jpgChernobyl', 2),
+(15, 'The Boys', 'Un grupo de vigilantes lucha contra superhéroes corruptos que abusan de sus poderes.', 'https://static.posters.cz/image/1300/posters/the-boys-season-2-i101937.jpg', 2),
 (16, 'Westworld', 'Un parque temático futurista permite a los visitantes vivir sus fantasías más salvajes sin consecuencias, hasta que algo sale mal.', 'https://pics.filmaffinity.com/westworld-604319388-large.jpg', 2),
 (17, 'Vikingos', 'Sigue las aventuras del legendario Ragnar Lothbrok y su tripulación vikinga.', 'https://es.web.img3.acsta.net/pictures/20/12/04/10/04/4859166.jpg', 2),
 (18, 'Black Mirror', 'Una serie de antología que explora una distopía de alta tecnología y los impactos negativos de la tecnología moderna.', 'https://i.pinimg.com/originals/e1/fb/16/e1fb164433849d9ac3fd18052d02f113.jpg', 2),
@@ -90,7 +90,7 @@ create table Media(
 (34, 'La La Land', 'Una pianista y una actriz aspirante se enamoran mientras buscan el éxito en Los Ángeles.', 'https://es.web.img3.acsta.net/pictures/16/11/30/17/44/581119.jpg', 1),
 (35, 'Mad Max: Fury Road', 'En un futuro post-apocalíptico, Max se une a Furiosa para escapar del tirano Immortan Joe.', 'https://upload.wikimedia.org/wikipedia/en/6/6e/Mad_Max_Fury_Road.jpg', 1),
 (36, 'The Revenant', 'Un hombre lucha por sobrevivir y vengarse tras ser atacado por un oso y dejado por muerto.', 'https://i.pinimg.com/originals/26/5e/89/265e89318d1f345432bd2eb34bd2c279.jpg', 1),
-(37, '1917', 'Dos soldados británicos durante la Primera Guerra Mundial reciben la misión de entregar un mensaje que salvará a miles.', 'https://www.elindependiente.com/wp-content/uploads/2019/10/1917.-Schofield-George-MacKay.-Foto-Francois-Duhamel.jpg', 1);
+(37, '1917', 'Dos soldados británicos durante la Primera Guerra Mundial reciben la misión de entregar un mensaje que salvará a miles.', 'https://archive.org/services/img/1917originalmotionpicture/full/pct:500/0/default.jpg', 1);
 
 create table Detalle_Pelicula(
 	id int auto_increment primary key ,
@@ -236,5 +236,3 @@ create table Libreria_Media(
 (2, 2, 32),
 (3, 3, 32),
 (4, 4, 29);
-
-    
