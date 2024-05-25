@@ -91,7 +91,6 @@ class MediaRepository extends ORMEntityRepository
             SELECT 
                 M.id, 
                 M.Titulo, 
-                M.Descripcion, 
                 M.Imagen, 
                 P.Valoracion 
             FROM 
@@ -124,7 +123,7 @@ class MediaRepository extends ORMEntityRepository
         join Detalle_Serie S on M.id = S.id_serie
         where (M.Tipo = 1 or M.Tipo = 2) and S.Ano = :ano
         UNION ALL
-        SELECT M.id, M.Titulo, M.Descripcion, M.Imagen, P.Valoracion
+        SELECT M.id, M.Titulo, M.Imagen, P.Valoracion
 		from Media M
         join Detalle_Pelicula P on M.id = P.id_pelicula
         where (M.Tipo = 1 or M.Tipo = 2) and P.Ano = :ano ;";
