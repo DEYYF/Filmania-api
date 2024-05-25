@@ -96,6 +96,11 @@ Busqueda_genero_year:
     controller: App\Controller\BusquedaController::busqueda_genero_year
     methods: GET
 
+Libreria_id:
+    path: /Libreria
+    controller: App\Controller\LibreriaController::libreria_id
+    methods: GET
+
 Libreria_user:
     path: /Libreria/User
     controller: App\Controller\LibreriaController::libreria_user

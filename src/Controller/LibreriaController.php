@@ -211,4 +211,18 @@ class LibreriaController extends AbstractController
         }
     }
 
+
+    public function libreria_id(Request $request, SerializerInterface $serializer){
+
+        if ($request->isMethod('GET')) 
+        {
+            $id_libreria = $request->query->get('id_libreria');
+
+            $libreria = $this->getDoctrine()->getRepository(Libreria::class)
+            ->findOneBy(['id' => $id_libreria]);
+
+            return new Response($serializer->serialize($libreria, 'json', ['groups' => 'libreria']));
+        }
+     }
+
 }
