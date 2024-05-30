@@ -236,3 +236,11 @@ create table Libreria_Media(
 (2, 2, 32),
 (3, 3, 32),
 (4, 4, 29);
+
+Create table Visto_Anteriormente(
+    id int auto_increment primary key,
+    id_media int,
+    id_user int,
+    foreign key(id_media) references Media(id) on delete cascade,
+    foreign key(id_user) references Usuario(id) on delete cascade
+    );
