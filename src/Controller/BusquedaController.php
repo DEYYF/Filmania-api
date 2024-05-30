@@ -101,6 +101,8 @@ class BusquedaController extends AbstractController
             return new Response($serializer->serialize($busqueda, 'json', ['groups' => 'media']));
         }
     }
+
+
     
 
 }

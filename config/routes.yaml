@@ -96,6 +96,11 @@ Busqueda_genero_year:
     controller: App\Controller\BusquedaController::busqueda_genero_year
     methods: GET
 
+Busqueda_media_id:
+    path: /Busqueda/Media
+    controller: App\Controller\BusquedaController::busqueda_media_id
+    methods: GET
+
 Libreria_id:
     path: /Libreria
     controller: App\Controller\LibreriaController::libreria_id
@@ -140,4 +145,15 @@ Libreria_addFavorito:
 Libreria_Cambio:
     path: /Libreria/Cambio/{id_libreria}
     controller: App\Controller\LibreriaController::cambio_configuracion
+    methods: POST
+
+
+Visto_Anteriormente:
+    path: /VistoAnteriormente
+    controller: App\Controller\VistoAnteriormenteController::visto_anteriormente
+    methods: GET
+
+Visto_Anteriormente_create:
+    path: /VistoAnteriormente/Create
+    controller: App\Controller\VistoAnteriormenteController::visto_anteriormente_create
     methods: POST

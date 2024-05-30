@@ -46,4 +46,58 @@ class VistoAnteriormente
      */
     private $idUser;
 
+
+    /**
+     * Get the value of id
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     */
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idMedia
+     */
+    public function getIdMedia(): Media
+    {
+        return $this->idMedia;
+    }
+
+    /**
+     * Set the value of idMedia
+     */
+    public function setIdMedia(Media $idMedia): self
+    {
+        $this->idMedia = $idMedia;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idUser
+     */
+    public function getIdUser(): Usuario
+    {
+        return $this->idUser;
+    }
+
+    /**
+     * Set the value of idUser
+     */
+    public function setIdUser(Usuario $idUser): self
+    {
+        $this->idUser = $idUser;
+
+        return $this;
+    }
 }

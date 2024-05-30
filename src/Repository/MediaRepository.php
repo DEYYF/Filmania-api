@@ -69,41 +69,49 @@ class MediaRepository extends ORMEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
     
-        $sql = "  SELECT 
-                M.id, 
-                M.Titulo,  
-                M.Imagen, 
-                S.Valoracion 
-            FROM 
-                Media M
-            JOIN 
-                Detalle_Serie S ON M.id = S.id_serie
-            JOIN 
-                Genero_Media G ON M.id = G.id_media
-            JOIN 
-                Genero t ON G.id_genero = t.id
-            WHERE 
-                M.Tipo = 2 
-                AND t.Nombre = :id_g
-            
-            UNION ALL
-            
-            SELECT 
-                M.id, 
-                M.Titulo, 
-                M.Imagen, 
-                P.Valoracion 
-            FROM 
-                Media M
-            JOIN 
-                Detalle_Pelicula P ON M.id = P.id_pelicula
-            JOIN 
-                Genero_Media G ON M.id = G.id_media
-            JOIN 
-                Genero t ON G.id_genero = t.id
-            WHERE 
-                M.Tipo = 1 
-                AND t.Nombre = :id_g; ";
+        $sql = " SELECT 
+        M.id, 
+        M.Titulo,  
+        M.Imagen, 
+        S.Valoracion,
+        CASE 
+            WHEN M.Tipo = 2 THEN 'Serie' 
+            ELSE 'Desconocido' 
+        END AS Tipo
+    FROM 
+        Media M
+    JOIN 
+        Detalle_Serie S ON M.id = S.id_serie
+    JOIN 
+        Genero_Media G ON M.id = G.id_media
+    JOIN 
+        Genero t ON G.id_genero = t.id
+    WHERE 
+        M.Tipo = 2 
+        AND t.Nombre = :id_g
+    
+    UNION ALL
+    
+    SELECT 
+        M.id, 
+        M.Titulo, 
+        M.Imagen, 
+        P.Valoracion,
+        CASE 
+            WHEN M.Tipo = 1 THEN 'Película' 
+            ELSE 'Desconocido' 
+        END AS Tipo
+    FROM 
+        Media M
+    JOIN 
+        Detalle_Pelicula P ON M.id = P.id_pelicula
+    JOIN 
+        Genero_Media G ON M.id = G.id_media
+    JOIN 
+        Genero t ON G.id_genero = t.id
+    WHERE 
+        M.Tipo = 1 
+        AND t.Nombre = :id_g;";
     
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':id_g', $id_g);
@@ -118,15 +126,44 @@ class MediaRepository extends ORMEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT M.id, M.Titulo, M.Imagen, S.Valoracion
-		from Media M
-        join Detalle_Serie S on M.id = S.id_serie
-        where (M.Tipo = 1 or M.Tipo = 2) and S.Ano = :ano
-        UNION ALL
-        SELECT M.id, M.Titulo, M.Imagen, P.Valoracion
-		from Media M
-        join Detalle_Pelicula P on M.id = P.id_pelicula
-        where (M.Tipo = 1 or M.Tipo = 2) and P.Ano = :ano ;";
+        $sql = "SELECT 
+        M.id, 
+        M.Titulo, 
+        M.Imagen, 
+        S.Valoracion,
+        CASE 
+            WHEN M.Tipo = 2 THEN 'Serie' 
+            WHEN M.Tipo = 1 THEN 'Película' 
+            ELSE 'Desconocido' 
+        END AS Tipo
+    FROM 
+        Media M
+    JOIN 
+        Detalle_Serie S ON M.id = S.id_serie
+    WHERE 
+        (M.Tipo = 1 OR M.Tipo = 2) 
+        AND S.Ano = :ano
+    
+    UNION ALL
+    
+    SELECT 
+        M.id, 
+        M.Titulo, 
+        M.Imagen, 
+        P.Valoracion,
+        CASE 
+            WHEN M.Tipo = 2 THEN 'Serie' 
+            WHEN M.Tipo = 1 THEN 'Película' 
+            ELSE 'Desconocido' 
+        END AS Tipo
+    FROM 
+        Media M
+    JOIN 
+        Detalle_Pelicula P ON M.id = P.id_pelicula
+    WHERE 
+        (M.Tipo = 1 OR M.Tipo = 2) 
+        AND P.Ano = :ano;
+    ";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindValue('ano', $year);
@@ -144,21 +181,27 @@ class MediaRepository extends ORMEntityRepository
         M.id, 
         M.Titulo, 
         M.Imagen, 
-        COALESCE(S.Valoracion, P.Valoracion) AS Valoracion
-        FROM 
-            Media M
-        JOIN 
-            Genero_Media G ON M.id = G.id_media
-        LEFT JOIN 
-            Detalle_Serie S ON M.id = S.id_serie AND M.Tipo = 2 AND S.Ano = :ano
-        LEFT JOIN 
-            Detalle_Pelicula P ON M.id = P.id_pelicula AND M.Tipo = 1 AND P.Ano = :ano
-        JOIN 
-            Genero t ON G.id_genero = t.id
-        WHERE 
-            (M.Tipo = 1 OR M.Tipo = 2) 
-            AND t.Nombre = :id_g
-            AND (S.Ano = :ano OR P.Ano = :ano);";
+        COALESCE(S.Valoracion, P.Valoracion) AS Valoracion,
+        CASE 
+            WHEN M.Tipo = 2 THEN 'Serie' 
+            WHEN M.Tipo = 1 THEN 'Película' 
+            ELSE 'Desconocido' 
+        END AS Tipo
+    FROM 
+        Media M
+    JOIN 
+        Genero_Media G ON M.id = G.id_media
+    LEFT JOIN 
+        Detalle_Serie S ON M.id = S.id_serie AND M.Tipo = 2 AND S.Ano = :ano
+    LEFT JOIN 
+        Detalle_Pelicula P ON M.id = P.id_pelicula AND M.Tipo = 1 AND P.Ano = :ano
+    JOIN 
+        Genero t ON G.id_genero = t.id
+    WHERE 
+        (M.Tipo = 1 OR M.Tipo = 2) 
+        AND t.Nombre = :id_g
+        AND (S.Ano = :ano OR P.Ano = :ano);
+    ";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindValue('ano', $year);
@@ -170,12 +213,20 @@ class MediaRepository extends ORMEntityRepository
     }
 
 
+    public function findVistoAnteriormente($id_user)
+    {
+        $conn = $this->getEntityManager()->getConnection();
 
+        $sql = "SELECT M.id, M.Titulo, M.Descripcion, M.Imagen, M.Tipo
+        from Media M
+        join Visto_Anteriormente V on M.id = V.id_media
+        where V.id_user = :id_user;" ;
 
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('id_user', $id_user);
+        $results = $stmt->executeQuery()->fetchAllAssociative();
 
-
-
-
-
+        return $results;
+    }
 
 }
