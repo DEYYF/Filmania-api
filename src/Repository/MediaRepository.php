@@ -217,10 +217,10 @@ class MediaRepository extends ORMEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT M.id, M.Titulo, M.Descripcion, M.Imagen, M.Tipo
-        from Media M
-        join Visto_Anteriormente V on M.id = V.id_media
-        where V.id_user = :id_user;" ;
+        $sql = "SELECT DISTINCT M.id, M.Titulo, M.Descripcion, M.Imagen, M.Tipo
+        FROM Media M
+        JOIN Visto_Anteriormente V ON M.id = V.id_media
+        WHERE V.id_user = :id_user;";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindValue('id_user', $id_user);

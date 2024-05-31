@@ -38,6 +38,7 @@ class BusquedaController extends AbstractController
                     'Titulo' => $media->getTitulo(),
                     'Imagen' => $media->getImagen(),
                     'Valoracion' => $detalle->getValoracion(),
+                    'Tipo' => 'Pelicula'
                 ];
             }
 
@@ -52,6 +53,7 @@ class BusquedaController extends AbstractController
                     'Titulo' => $media->getTitulo(),
                     'Imagen' => $media->getImagen(),
                     'Valoracion' => $detalle->getValoracion(),
+                    'Tipo' => 'Serie'
                 ];
             }
 
