@@ -7,54 +7,45 @@ use App\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class UsuarioController extends AbstractController
 {
-    public function log(Request $request, SerializerInterface $serializer)
-    {
-        if ($request->isMethod('POST')) 
-        {
-            $bodydata = $request->getContent();
-                $usuario_new = $serializer->deserialize(
-                    $bodydata, 
-                    Usuario::class, 
-                    'json');
-            
-            if ($usuario_new != null){
-                $usuario = $this->getDoctrine()->getRepository(Usuario::class)->findOneBy(['usuarios' => $usuario_new->getUsuarios(), 'password' => $usuario_new->getPassword()]);
-                if ($usuario != null) {
-                    // quiero mostrar solo el id del usuario en el json
-                    $id = $usuario->getId();
-                    return new Response(json_encode(['id' => $id]));
-                }
-                } else {
-                    return new Response('{"error":', Response::HTTP_UNAUTHORIZED, ['Content-Type' => 'application/json']);
-                }
-            } else {
-                return new Response('{"error":', Response::HTTP_UNAUTHORIZED, ['Content-Type' => 'application/json']);
-            }   
-        }   
-
     
-
-
-    public function new_user(Request $request, SerializerInterface $serializer)
+    public function log(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager)
     {
-        if ($request->isMethod('POST')) 
-        {
+        if ($request->isMethod('POST')) {
             $bodydata = $request->getContent();
-            $usuario_new = $serializer->deserialize(
-                $bodydata, 
-                Usuario::class, 
-                'json');
+            $usuario_new = $serializer->deserialize($bodydata, Usuario::class, 'json');
 
-            $entityManager = $this->getDoctrine()->getManager();
+            $username = $usuario_new->getUsuarios();
+
+            $usuario = $entityManager->getRepository(Usuario::class)->findOneBy(['usuarios' => $username]);
+
+            if ($usuario && ($usuario_new->getPassword() == decodeData($usuario->getPassword()))) {
+                $id = $usuario->getId();
+                return new Response(json_encode(['id' => $id]), Response::HTTP_OK, ['Content-Type' => 'application/json']);
+            } else {
+                return new Response(json_encode(['error' => 'Credenciales inválidas']), Response::HTTP_UNAUTHORIZED, ['Content-Type' => 'application/json']);
+            }
+        }
+
+        return new Response(json_encode(['error' => 'Método no permitido']), Response::HTTP_METHOD_NOT_ALLOWED, ['Content-Type' => 'application/json']);
+    }
+
+    public function new_user(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager)
+    {
+        if ($request->isMethod('POST')) {
+            $bodydata = $request->getContent();
+            $usuario_new = $serializer->deserialize($bodydata, Usuario::class, 'json');
+
+            $plainPassword = $usuario_new->getPassword();
+            $hash = encodeData($plainPassword);
+            $usuario_new->setPassword($hash);
+
             $entityManager->persist($usuario_new);
 
-            
-
-            
             $libreria = new Libreria();
             $libreria->setIdUsuario($usuario_new);
             $libreria->setTitulo('ver mas tarde');
@@ -70,9 +61,10 @@ class UsuarioController extends AbstractController
             $entityManager->persist($libreria2);
             $entityManager->flush();
 
-            return new Response($serializer->serialize($usuario_new, 'json', ['groups' => 'usuario']));
-
+            return new Response($serializer->serialize($usuario_new, 'json', ['groups' => 'usuario']), Response::HTTP_CREATED, ['Content-Type' => 'application/json']);
         }
+
+        return new Response(json_encode(['error' => 'Método no permitido']), Response::HTTP_METHOD_NOT_ALLOWED, ['Content-Type' => 'application/json']);
     }
 
     public function user_id(Request $request, SerializerInterface $serializer)
@@ -83,6 +75,10 @@ class UsuarioController extends AbstractController
             $usuario = $this->getDoctrine()
                 ->getRepository(Usuario::class)
                 ->findOneBy(['id' => $id]);
+            
+                $usuario_password_encrypted = $usuario->getPassword();
+                $usuario->setPassword(decodeData($usuario_password_encrypted));
+
             
             return new Response($serializer->serialize($usuario, 'json', ['groups' => 'usuario']));
         }
@@ -123,7 +119,7 @@ class UsuarioController extends AbstractController
             $usuario->setEmail($usuario_new->getEmail());
             $usuario->setPais($usuario_new->getPais());
             $usuario->setGenero($usuario_new->getGenero());
-            $usuario->setPassword($usuario_new->getPassword());
+            $usuario->setPassword(encodeData($usuario_new->getPassword()));
             $usuario->setImagen($usuario_new->getImagen());
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -135,5 +131,16 @@ class UsuarioController extends AbstractController
     }
 
 
-
 }
+
+
+// Codificar
+function encodeData($data) {
+    return base64_encode($data);
+}
+
+// Decodificar
+function decodeData($encodedData) {
+    return base64_decode($encodedData);
+}
+

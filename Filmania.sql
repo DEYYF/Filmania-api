@@ -14,8 +14,8 @@ CREATE TABLE Usuario (
 
 INSERT INTO Usuario (id, Usuarios, Password, Email, Genero, Pais, Imagen)
 VALUES
-(1, 'unfago', '12345', 'unaifago@gmail.com', 'Hombre', 'España', 'https://pbs.twimg.com/media/Fy75lCdXgAEGjWa.jpg'),
-(2, 'Alvaricoque', '12345', 'alvarealla@alu.edu.gva.es', 'Femenino', 'Argentina', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Apricot_and_cross_section.jpg/251px-Apricot_and_cross_section.jpg');
+(1, 'unfago', 'MTIzNDU=', 'unaifago@gmail.com', 'Hombre', 'España', 'https://pbs.twimg.com/media/Fy75lCdXgAEGjWa.jpg'),
+(2, 'Alvaricoque', 'MTIzNDU=', 'alvarealla@alu.edu.gva.es', 'Femenino', 'Argentina', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Apricot_and_cross_section.jpg/251px-Apricot_and_cross_section.jpg');
 
 
 CREATE TABLE Libreria (
