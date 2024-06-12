@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class UsuarioController extends AbstractController
@@ -45,7 +47,10 @@ class UsuarioController extends AbstractController
             $usuario_new->setPassword($hash);
 
             $entityManager->persist($usuario_new);
+            
 
+            
+            
             $libreria = new Libreria();
             $libreria->setIdUsuario($usuario_new);
             $libreria->setTitulo('ver mas tarde');
