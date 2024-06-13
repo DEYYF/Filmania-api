@@ -49,7 +49,7 @@ class MediaRepository extends ORMEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT M.id, M.Titulo, M.Descripcion, M.Imagen, M.Tipo
+        $sql = "SELECT M.id as id, M.Titulo as titulo, M.Descripcion as descripcion, M.Imagen as imagen
         from Media M
         join Genero_Media G on M.id = G.id_media
         where M.Tipo = 3 and (G.id_genero = :id_g or G.id_genero = :id_g2 or G.id_genero = :id_g3);" ;
